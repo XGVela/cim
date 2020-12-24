@@ -1,0 +1,11 @@
+// This file is added for reference purpose only.
+{
+		"logging_svc_url": "fb-service.xgvela-paas.svc.cluster.local:5175",
+		"logging_svc_tcp_port": "5170",
+		"kafka_brokers": [
+			"kafka-svc.xgvela-xgvela1-infra-xgvela-xgvela1.svc.cluster.local:9092"
+		],
+		"etcd_url": "etcd.xgvela-xgvela1-infra-xgvela-xgvela1.svc.cluster.local:2379",
+		"enable_retrx" : "true",
+		"log_format": "json"
+}

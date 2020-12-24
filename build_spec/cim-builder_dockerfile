@@ -1,0 +1,25 @@
+
+ARG BASE_DISTRO_IMAGE
+ARG BASE_DISTRO_VERSION
+
+FROM $BASE_DISTRO_IMAGE:$BASE_DISTRO_VERSION
+
+RUN apk add --no-cache git make musl-dev go=1.13.13-r0
+#RUN apk add --no-cache git make musl-dev go=1.13.4-r1
+
+# Configure Go
+ENV GOROOT /usr/lib/go
+ENV GOPATH /go
+ENV PATH /go/bin:$PATH
+
+RUN mkdir -p ${GOPATH}/src/cim ${GOPATH}/bin
+RUN mkdir -p /opt/bin
+
+ADD ./build_spec/go.mod $GOPATH/src/cim/
+
+WORKDIR $GOPATH/src/cim
+
+RUN ls -lrt $GOPATH/src/cim && pwd
+
+RUN go mod download
+

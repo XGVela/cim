@@ -1,0 +1,147 @@
+{
+    "events": {
+        "CimConnectEtcdFailure": {
+            "eventType": "COMMUNICATION",
+            "perceivedSeverity": "CRITICAL",
+            "probableCause": "etcd communication failure",
+            "specificProblem": "CIM unable to establish connection to etcd",
+            "rootCauseIndicator": "",
+            "trendIndication": "",
+            "correlatedNotifications": "",
+            "additionalText": "",
+            "proposedRepairAction": ""
+        },
+        "LmaasTCPFailure": {
+            "eventType": "COMMUNICATION",
+            "perceivedSeverity": "MAJOR",
+            "probableCause": "TCP connection failure towards fluent-bit onbserved in LMaaS",
+            "specificProblem": "",
+            "rootCauseIndicator": "",
+            "trendIndication": "",
+            "correlatedNotifications": "",
+            "additionalText": "",
+            "proposedRepairAction": "Verify fluent-bit is running."
+        },
+        "CimCommitConfigSuccess": {
+            "eventType": "COMMIT_CONFIG",
+            "perceivedSeverity": "INFO",
+            "probableCause": "A commit-config operation towards etcd is successful",
+            "specificProblem": "",
+            "rootCauseIndicator": "",
+            "trendIndication": "",
+            "correlatedNotifications": "",
+            "additionalText": "",
+            "proposedRepairAction": ""
+        },
+        "CimCommitConfigFailure": {
+            "eventType": "COMMIT_CONFIG",
+            "perceivedSeverity": "MAJOR",
+            "probableCause": "A commit-config operation failed towards etcd",
+            "specificProblem": "",
+            "rootCauseIndicator": "",
+            "trendIndication": "",
+            "correlatedNotifications": "",
+            "additionalText": "",
+            "proposedRepairAction": ""
+        },
+        "CimConfigUpdateSuccess": {
+            "eventType": "CONFIG_UPDATE",
+            "perceivedSeverity": "INFO",
+            "probableCause": "Successfully updated CIM configuration",
+            "specificProblem": "",
+            "rootCauseIndicator": "",
+            "trendIndication": "",
+            "correlatedNotifications": "",
+            "additionalText": "",
+            "proposedRepairAction": ""
+        },
+        "CimConfigUpdateFailure": {
+            "eventType": "CONFIG_UPDATE",
+            "perceivedSeverity": "MAJOR",
+            "probableCause": "Failure updating CIM configuration",
+            "specificProblem": "",
+            "rootCauseIndicator": "",
+            "trendIndication": "",
+            "correlatedNotifications": "",
+            "additionalText": "",
+            "proposedRepairAction": ""
+        },
+        "CimConfigUpdateUnused": {
+            "eventType": "CONFIG_UPDATE",
+            "perceivedSeverity": "INFO",
+            "probableCause": "Config patch unused by application",
+            "specificProblem": "",
+            "rootCauseIndicator": "",
+            "trendIndication": "",
+            "correlatedNotifications": "",
+            "additionalText": "",
+            "proposedRepairAction": ""
+        },
+        "Configured": {
+            "eventType": "CONFIGURATION",
+            "perceivedSeverity": "INFO",
+            "probableCause": "Full configuration available for application to be ready",
+            "specificProblem": "Application is configured.",
+            "rootCauseIndicator": "",
+            "trendIndication": "",
+            "correlatedNotifications": "",
+            "additionalText": "",
+            "proposedRepairAction": ""
+        },
+        "NotConfigured": {
+            "eventType": "CONFIGURATION",
+            "perceivedSeverity": "INFO",
+            "probableCause": "Full configuration unavailable for application to be ready",
+            "specificProblem": "Application is not configured.",
+            "rootCauseIndicator": "",
+            "trendIndication": "",
+            "correlatedNotifications": "",
+            "additionalText": "",
+            "proposedRepairAction": "Push Day-1 configuration"
+        },
+        "ShutdownSuccess": {
+            "eventType": "SHUTDOWN",
+            "perceivedSeverity": "INFO",
+            "probableCause": "Applicationn shutdown itself gracefully",
+            "specificProblem": "Application shutdown gracefully",
+            "rootCauseIndicator": "",
+            "trendIndication": "",
+            "correlatedNotifications": "",
+            "additionalText": "",
+            "proposedRepairAction": ""
+        },
+        "ShutdownFailure": {
+            "eventType": "SHUTDOWN",
+            "perceivedSeverity": "MAJOR",
+            "probableCause": "Application could not shutdown itself gracefully",
+            "specificProblem": "Application could not shutdown gracefully",
+            "rootCauseIndicator": "",
+            "trendIndication": "",
+            "correlatedNotifications": "",
+            "additionalText": "",
+            "proposedRepairAction": ""
+        },
+        "ApplicationShutdownInitiated": {
+            "eventType": "SHUTDOWN",
+            "perceivedSeverity": "INFO",
+            "probableCause": "CIM notifies application to shutdown as it has received a termination signal",
+            "specificProblem": "CIM notifies application to shutdown as it has received a termination signal",
+            "rootCauseIndicator": "",
+            "trendIndication": "",
+            "correlatedNotifications": "",
+            "additionalText": "",
+            "proposedRepairAction": ""
+        },
+        "LoadConfigRequestFailure": {
+            "eventType": "LOADCONFIG",
+            "perceivedSeverity": "MAJOR",
+            "probableCause": "Application could not load day1 config",
+            "specificProblem": "Application could not load day1 config",
+            "rootCauseIndicator": "",
+            "trendIndication": "",
+            "correlatedNotifications": "",
+            "additionalText": "",
+            "proposedRepairAction": ""
+        }
+    }
+}

@@ -1,0 +1,67 @@
+
+ARG BASE_DISTRO_IMAGE
+ARG BASE_DISTRO_VERSION
+ARG BUILDER_IMAGE
+ARG BUILDER_VERSION
+
+################
+# First phase, Download dependency packages based on go.mod and generate binary
+
+FROM $BUILDER_IMAGE:$BUILDER_VERSION as cim-builder
+
+ARG BUILDER_LABEL
+
+RUN echo "Tagging Label IMAGE-TYPE=$BUILDER_LABEL"
+LABEL IMAGE-TYPE="$BUILDER_LABEL"
+
+ADD . $GOPATH/src/cim
+
+WORKDIR $GOPATH/src/cim
+
+RUN mv build_spec/go.mod .
+
+RUN rm -rf ./test
+RUN rm -rf ./ndsend
+
+RUN ls -lrt $GOPATH/src/cim && pwd
+
+RUN GO111MODULE=on
+
+RUN go fmt
+
+RUN cp -f server.key server.crt cim.json get_containerid.sh /opt/bin/
+
+RUN go build -v -o /opt/bin/NatsSubFb
+#RUN go build -v -x -o /opt/bin/NatsSubFb | tee /opt/bin/build.log
+#RUN go list -f "{{.ImportPath}} {{.Deps}}" ./... | tee /opt/bin/build.log
+
+RUN md5sum /opt/bin/*
+
+################
+# Second phase, Build modified ndsend for ipv6 neighbour advertisement (in c language).
+
+FROM $BASE_DISTRO_IMAGE:$BASE_DISTRO_VERSION as ndsend-builder
+RUN apk add --no-cache linux-headers gcc musl-dev
+ADD ./ndsend src/
+RUN ls -lrt && pwd && ls -lrt src/
+WORKDIR src
+RUN ls -lrt && pwd
+RUN gcc ndsend.c -o ndsend
+
+################
+# Third phase, Copy the compiled binaries, configs and certicates and generate release artifact for CIM
+
+FROM $BASE_DISTRO_IMAGE:$BASE_DISTRO_VERSION
+RUN apk add --no-cache curl bash iputils net-tools
+RUN set -ex mkdir -p /opt/bin/
+WORKDIR /opt/bin
+COPY --from=cim-builder /opt/bin /opt/bin
+COPY --from=ndsend-builder /src/ndsend /opt/bin
+COPY cim.json /opt/config/
+COPY cim.yang /opt/config/
+ENV PATH="/opt/bin:${PATH}"
+RUN md5sum /opt/bin/*
+#RUN curl -O https://raw.githubusercontent.com/google/metallb/v0.8.0/manifests/metallb.yaml
+#RUN curl -O https://repo.spring.io/milestone/org/springframework/boot/spring-boot-starter-parent/2.1.0.RELEASE/spring-boot-starter-parent-2.1.0.RELEASE.pom
+RUN ls -lrt
+CMD ["/bin/bash"]
