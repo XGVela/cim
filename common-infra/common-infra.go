@@ -107,7 +107,7 @@ func GetTopoEngineFqdn() (topoEngineFqdn string) {
 	if types.CommonInfraConfigObj != nil {
 		topoEngineFqdn = types.CommonInfraConfigObj.TopoEngineFqdn
 		if topoEngineFqdn == "" {
-			topoEngineFqdn = "topo-engine." + types.Namespace + ".svc.cluster.local:8080"
+			topoEngineFqdn = "tmaas." + types.Namespace + ".svc.cluster.local:8080"
 		}
 		return
 	}
@@ -117,7 +117,7 @@ func GetTopoEngineFqdn() (topoEngineFqdn string) {
 			logs.LogConf.Exception("Error while getting XGVela Namespace", err.Error(), ". Terminating Self.")
 		}
 	}
-	topoEngineFqdn = "topo-engine." + types.XGVelaNamespace + ".svc.cluster.local:8080"
+	topoEngineFqdn = "tmaas." + types.XGVelaNamespace + ".svc.cluster.local:8080"
 	return
 }
 
@@ -125,7 +125,7 @@ func GetApigwRestFqdn() string {
 	var err error
 	if types.CommonInfraConfigObj != nil {
 		if types.CommonInfraConfigObj.APIGwFqdn == "" {
-			types.CommonInfraConfigObj.APIGwFqdn = "config-service." + types.Namespace + ".svc.cluster.local:8008"
+			types.CommonInfraConfigObj.APIGwFqdn = "cmaas." + types.Namespace + ".svc.cluster.local:8008"
 		}
 		return types.CommonInfraConfigObj.APIGwFqdn
 	}
@@ -135,6 +135,6 @@ func GetApigwRestFqdn() string {
 			logs.LogConf.Exception("Error while getting XGVela Namespace", err.Error(), ". Terminating Self.")
 		}
 	}
-	apigwRestFqdn := "config-service." + types.XGVelaNamespace + ".svc.cluster.local:8008"
+	apigwRestFqdn := "cmaas." + types.XGVelaNamespace + ".svc.cluster.local:8008"
 	return apigwRestFqdn
 }
