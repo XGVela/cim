@@ -1,3 +1,7 @@
+module cim
+
+go 1.13
+
 require (
          google.golang.org/grpc v1.26.0
          github.com/nats-io/nats-server/v2 v2.1.4

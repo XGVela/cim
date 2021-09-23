@@ -40,11 +40,11 @@ COMMON_ARG=""
 CONFIG_RELEASE_LIST="cim.yang cim.json eventdef-cim.json"
 
 if [[ -n "$CLEAN_BUILD_BUILDER_IMAGE" ]] && [[ "$CLEAN_BUILD_BUILDER_IMAGE" == "yes" ]]; then
-echo -e "\e[1;32;40m[CIM-BUILD] Clean Build Builder Image...\e[0m"
+echo -e "[CIM-BUILD] Clean Build Builder Image...\e[0m"
 BUILDER_ARG="--no-cache"
 fi
 
-echo -e "\e[1;32;40m[CIM-BUILD] Build Builder:$BUILDER_IMAGE, Version:$BUILDER_VERSION \e[0m"
+echo -e "[CIM-BUILD] Build Builder:$BUILDER_IMAGE, Version:$BUILDER_VERSION"
 docker build --rm $BUILDER_ARG \
              $COMMON_ARG \
              --build-arg BASE_DISTRO_IMAGE=$BASE_DISTRO_IMAGE \
@@ -54,7 +54,7 @@ docker build --rm $BUILDER_ARG \
 
 ##NANO SEC timestamp LABEL, to enable multiple build in same system
 BUILDER_LABEL="cim-builder-$(date +%s%9N)"
-echo -e "\e[1;32;40m[CIM-BUILD] Build MICROSERVICE_NAME:$MICROSERVICE_NAME, Version:$MICROSERVICE_VERSION \e[0m"
+echo -e "[CIM-BUILD] Build MICROSERVICE_NAME:$MICROSERVICE_NAME, Version:$MICROSERVICE_VERSION"
 docker build --rm \
              $COMMON_ARG \
              --build-arg BUILDER_LABEL=$BUILDER_LABEL \
@@ -65,21 +65,21 @@ docker build --rm \
              -f ./build_spec/cim_dockerfile \
              -t $MICROSERVICE_NAME:$MICROSERVICE_VERSION .
 
-echo -e "\e[1;32;40m[CIM-BUILD] Setting Artifacts Environment \e[0m"
+echo -e "[CIM-BUILD] Setting Artifacts Environment"
 rm -rf $ARTIFACTS_PATH
 mkdir -p $ARTIFACTS_PATH
 mkdir -p $ARTIFACTS_PATH/images
 mkdir -p $ARTIFACTS_PATH/config
 
-echo -e "\e[1;32;40m[CIM-BUILD] Releasing Artifacts... @$ARTIFACTS_PATH \e[0m"
+echo -e "[CIM-BUILD] Releasing Artifacts... @$ARTIFACTS_PATH"
 docker save $MICROSERVICE_NAME:$MICROSERVICE_VERSION | gzip > $ARTIFACTS_PATH/images/$MICROSERVICE_NAME-$MICROSERVICE_VERSION.tar.gz
 cp -rf $CONFIG_RELEASE_LIST $ARTIFACTS_PATH/config/
 
-echo -e "\e[1;32;40m[CIM-BUILD] Deleting Intermidiate Containers... \e[0m"
+echo -e "[CIM-BUILD] Deleting Intermidiate Containers..."
 docker image prune -f --filter "label=IMAGE-TYPE=$BUILDER_LABEL"
 docker rmi -f $MICROSERVICE_NAME:$MICROSERVICE_VERSION
 
 if [[ -n "$DELETE_BUILDER_IMAGE" ]] && [[ "$DELETE_BUILDER_IMAGE" == "yes" ]]; then
-echo -e "\e[1;32;40m[CIM-BUILD] Deleting Builder Image... \e[0m"
+echo -e "[CIM-BUILD] Deleting Builder Image..."
 docker rmi -f $BUILDER_IMAGE:$BUILDER_VERSION
 fi
